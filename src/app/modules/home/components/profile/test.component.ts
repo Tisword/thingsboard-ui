@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'tb-test',
+  selector: 'tb-test1',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
