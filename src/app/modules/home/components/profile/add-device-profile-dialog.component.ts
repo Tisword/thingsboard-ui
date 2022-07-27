@@ -91,6 +91,9 @@ export class AddDeviceProfileDialogComponent extends
 
   provisionConfigFormGroup: FormGroup;
 
+  // 添加一个物模型的表格
+  objectModelConfigFormGroup: FormGroup;
+
   serviceType = ServiceType.TB_RULE_ENGINE;
 
   constructor(protected store: Store<AppState>,
@@ -138,6 +141,12 @@ export class AddDeviceProfileDialogComponent extends
         } as DeviceProvisionConfiguration, [Validators.required]]
       }
     );
+
+    this.objectModelConfigFormGroup = this.fb.group(
+      {
+        properties:[null]
+      }
+  );
   }
 
   private deviceProfileTransportTypeChanged() {
@@ -175,6 +184,8 @@ export class AddDeviceProfileDialogComponent extends
         return this.alarmRulesFormGroup;
       case 3:
         return this.provisionConfigFormGroup;
+      case 4:
+        return this.objectModelConfigFormGroup;//添加一个用于填写物模型属性的表格
     }
   }
 
@@ -197,7 +208,8 @@ export class AddDeviceProfileDialogComponent extends
           transportConfiguration: this.transportConfigFormGroup.get('transportConfiguration').value,
           alarms: this.alarmRulesFormGroup.get('alarms').value,
           provisionConfiguration: deviceProvisionConfiguration
-        }
+        },
+        properties: this.objectModelConfigFormGroup.get('properties').value,
       };
       if (this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value) {
         deviceProfile.defaultRuleChainId = new RuleChainId(this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value);
@@ -223,6 +235,8 @@ export class AddDeviceProfileDialogComponent extends
         return 'device-profile.alarm-rules';
       case 3:
         return 'device-profile.device-provisioning';
+      case 4:
+        return '添加物模型'; //用于添加物模型
     }
   }
 

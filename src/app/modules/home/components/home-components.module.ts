@@ -148,6 +148,7 @@ import {
 } from '@home/components/tokens';
 import { DashboardStateComponent } from '@home/components/dashboard-page/dashboard-state.component';
 import { EntityDetailsPageComponent } from '@home/components/entity/entity-details-page.component';
+import { TestComponent } from './profile/test.component';
 
 @NgModule({
   declarations:
@@ -267,7 +268,8 @@ import { EntityDetailsPageComponent } from '@home/components/entity/entity-detai
       DashboardStateDialogComponent,
       DashboardImageDialogComponent,
       EmbedDashboardDialogComponent,
-      DisplayWidgetTypesPanelComponent
+      DisplayWidgetTypesPanelComponent,
+      TestComponent
     ],
   imports: [
     CommonModule,

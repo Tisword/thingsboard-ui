@@ -124,6 +124,16 @@
           </tb-device-profile-provision-configuration>
         </form>
       </mat-step>
+      <!-- 这里添加一个新的<mat-step>用于增加物模型的配置填写 -->
+        <mat-step [stepControl]="objectModelConfigFormGroup" [optional]="true">
+          <form [formGroup]="objectModelConfigFormGroup" style="padding-bottom: 16px;">
+            <ng-template matStepLabel>添加物模型</ng-template>
+            <!-- <tb-add-device-objectmodel></tb-add-device-objectmodel>
+             -->
+             <h1>测试使用</h1>
+             <tb-test></tb-test>
+          </form>
+        </mat-step>
     </mat-horizontal-stepper>
   </div>
   <div mat-dialog-actions fxLayout="row">
