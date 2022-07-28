@@ -149,6 +149,7 @@ import {
 import { DashboardStateComponent } from '@home/components/dashboard-page/dashboard-state.component';
 import { EntityDetailsPageComponent } from '@home/components/entity/entity-details-page.component';
 import { TestComponent } from './profile/test.component';
+import { DeviceProfileObjectmodelComponent } from './profile/device-profile-objectmodel/device-profile-objectmodel.component';
 
 @NgModule({
   declarations:
@@ -269,7 +270,8 @@ import { TestComponent } from './profile/test.component';
       DashboardImageDialogComponent,
       EmbedDashboardDialogComponent,
       DisplayWidgetTypesPanelComponent,
-      TestComponent
+      TestComponent,
+      DeviceProfileObjectmodelComponent
     ],
   imports: [
     CommonModule,

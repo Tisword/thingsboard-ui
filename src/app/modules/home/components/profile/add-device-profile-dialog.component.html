@@ -128,7 +128,7 @@
         <mat-step [stepControl]="objectModelConfigFormGroup" [optional]="true">
           <form [formGroup]="objectModelConfigFormGroup" style="padding-bottom: 16px;">
             <ng-template matStepLabel>添加物模型</ng-template>
-             <tb-device-profile-objectmodel></tb-device-profile-objectmodel>
+             <tb-device-profile-objectmodel (objectmodelChange)="ObjectModeChange($event)" #addobjectModel></tb-device-profile-objectmodel>
           </form>
         </mat-step>
     </mat-horizontal-stepper>

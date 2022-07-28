@@ -29,11 +29,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '@shared/components/dialog.component';
+import {DeviceProfileObjectmodelComponent} from'./device-profile-objectmodel/device-profile-objectmodel.component'
 import { Router } from '@angular/router';
 import {
   createDeviceProfileConfiguration,
   createDeviceProfileTransportConfiguration,
   DeviceProfile,
+  DeviceProfileDto,
   DeviceProfileType,
   deviceProfileTypeTranslationMap,
   DeviceProvisionConfiguration,
@@ -66,6 +68,9 @@ export class AddDeviceProfileDialogComponent extends
   DialogComponent<AddDeviceProfileDialogComponent, DeviceProfile> implements AfterViewInit {
 
   @ViewChild('addDeviceProfileStepper', {static: true}) addDeviceProfileStepper: MatHorizontalStepper;
+  
+  //添加子组件以调用子组件的方法
+  @ViewChild('addobjectModel')  addobjectModel:DeviceProfileObjectmodelComponent;
 
   selectedIndex = 0;
 
@@ -190,6 +195,9 @@ export class AddDeviceProfileDialogComponent extends
   }
 
   add(): void {
+    //调用子组件的方法保存之前的物模型数据
+    this.addobjectModel.onSubmit();
+    //开始传数据
     if (this.allValid()) {
       const deviceProvisionConfiguration: DeviceProvisionConfiguration = this.provisionConfigFormGroup.get('provisionConfiguration').value;
       const provisionDeviceKey = deviceProvisionConfiguration.provisionDeviceKey;
@@ -209,7 +217,6 @@ export class AddDeviceProfileDialogComponent extends
           alarms: this.alarmRulesFormGroup.get('alarms').value,
           provisionConfiguration: deviceProvisionConfiguration
         },
-        properties: this.objectModelConfigFormGroup.get('properties').value,
       };
       if (this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value) {
         deviceProfile.defaultRuleChainId = new RuleChainId(this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value);
@@ -217,9 +224,14 @@ export class AddDeviceProfileDialogComponent extends
       if (this.deviceProfileDetailsFormGroup.get('defaultDashboardId').value) {
         deviceProfile.defaultDashboardId = new DashboardId(this.deviceProfileDetailsFormGroup.get('defaultDashboardId').value);
       }
-      this.deviceProfileService.saveDeviceProfile(deepTrim(deviceProfile)).subscribe(
+      const deviceProfileDto:DeviceProfileDto={
+        deviceProfile:deviceProfile,
+        properties:this.objectModelConfigFormGroup.value.properties
+
+      }
+      this.deviceProfileService.saveDeviceProfileDto(deepTrim(deviceProfileDto)).subscribe(
         (savedDeviceProfile) => {
-          this.dialogRef.close(savedDeviceProfile);
+          this.dialogRef.close(savedDeviceProfile.deviceProfile);
         }
       );
     }
@@ -263,5 +275,10 @@ export class AddDeviceProfileDialogComponent extends
         return false;
       }
     });
+  }
+  //添加处理接收物模型的函数
+  ObjectModeChange(event: FormGroup){
+      this.objectModelConfigFormGroup=event;
+      console.log("父组件获取值",this.objectModelConfigFormGroup.value.properties)
   }
 }

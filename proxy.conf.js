@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const forwardUrl = "http://192.168.1.103:8080";
-const wsForwardUrl = "ws://192.168.1.103:8080";
+const forwardUrl = "http://192.168.1.104:8080";
+const wsForwardUrl = "ws://192.168.1.104:8080";
 const ruleNodeUiforwardUrl = forwardUrl;
 
 const PROXY_CONFIG = {

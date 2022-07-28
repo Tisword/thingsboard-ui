@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms'
 @Component({
   selector: 'tb-device-profile-objectmodel',
@@ -9,11 +9,14 @@ export class DeviceProfileObjectmodelComponent implements OnInit {
 
   types = ["Double","String","Boolean","Long"];
 
+
+  //用于向父组件传递组件
+  @Output() objectmodelChange:EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   productForm: FormGroup;
 
   constructor(private fb:FormBuilder) {
     this.productForm = this.fb.group({
-      quantities: this.fb.array([]) ,
+      properties: this.fb.array([]) ,
     });
   }
 
@@ -24,8 +27,8 @@ export class DeviceProfileObjectmodelComponent implements OnInit {
     return this.types;
   }
 
-  quantities() : FormArray {
-    return this.productForm.get("quantities") as FormArray
+  properties() : FormArray {
+    return this.productForm.get("properties") as FormArray
   }
    
   newQuantity(): FormGroup {
@@ -37,17 +40,17 @@ export class DeviceProfileObjectmodelComponent implements OnInit {
   }
    
   addQuantity() {
-    this.quantities().push(this.newQuantity());
+    this.properties().push(this.newQuantity());
   }
    
   removeQuantity(i:number) {
-    this.quantities().removeAt(i);
+    this.properties().removeAt(i);
   }
    
-  onSubmit() {
-    console.log(this.productForm.value);
+  onSubmit(){
+    //一旦保存就将表格数据传递给父组件
+    this.objectmodelChange.emit(this.productForm);
   }
-
   
 
 }
