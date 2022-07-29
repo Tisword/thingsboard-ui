@@ -31,14 +31,6 @@
   <div style="height: 4px;" *ngIf="!(isLoading$ | async)"></div>
   <div mat-dialog-content>
     <mat-horizontal-stepper [linear]="true" #addDeviceProfileStepper (selectionChange)="changeStep($event)">
-      <mat-step [stepControl]="provisionConfigFormGroup" [optional]="true">
-        <form [formGroup]="provisionConfigFormGroup" style="padding-bottom: 16px;">
-          <ng-template matStepLabel>{{ 'device-profile.device-provisioning' | translate }}</ng-template>
-          <tb-device-profile-provision-configuration
-            formControlName="provisionConfiguration">
-          </tb-device-profile-provision-configuration>
-        </form>
-      </mat-step>
       <mat-step [stepControl]="deviceProfileDetailsFormGroup">
         <form [formGroup]="deviceProfileDetailsFormGroup" style="padding-bottom: 16px;">
           <ng-template matStepLabel>{{ 'device-profile.device-profile-details' | translate }}</ng-template>
@@ -132,7 +124,13 @@
           </tb-device-profile-provision-configuration>
         </form>
       </mat-step>
-
+      <!-- 这里添加一个新的<mat-step>用于增加物模型的配置填写 -->
+        <mat-step [stepControl]="objectModelConfigFormGroup" [optional]="true">
+          <form [formGroup]="objectModelConfigFormGroup" style="padding-bottom: 16px;">
+            <ng-template matStepLabel>添加物模型</ng-template>
+             <tb-device-profile-objectmodel (objectmodelChange)="ObjectModeChange($event)" #addobjectModel></tb-device-profile-objectmodel>
+          </form>
+        </mat-step>
     </mat-horizontal-stepper>
   </div>
   <div mat-dialog-actions fxLayout="row">

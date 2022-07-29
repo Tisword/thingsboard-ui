@@ -575,12 +575,26 @@ export interface DeviceProfile extends BaseData<DeviceProfileId> {
   profileData: DeviceProfileData;
 }
 
-//定义一个物模型的属性,有名字和类型
+
+//为了满足能够创建新的物模型而新建的DTO
+export interface DeviceProfileDto{
+  deviceProfile: DeviceProfile;
+  properties: Array<ObjectModelProperty>;
+}
+
+//定义一个物模型的属性,有名字和类型 lzx
 export interface Property{
   name: string;
   type: string;
   tag: boolean;
   deviceProfile: DeviceProfileId;
+}
+
+//定义一个物模型的属性,有名字和类型 xt
+export interface ObjectModelProperty{
+  name: string;
+  tyep: string;
+  isTag: boolean;
 }
 
 export interface DeviceProfileInfo extends EntityInfoData {

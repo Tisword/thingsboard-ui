@@ -20,7 +20,7 @@ import { PageLink } from '@shared/models/page/page-link';
 import { defaultHttpOptionsFromConfig, RequestConfig } from './http-utils';
 import { Observable, of, throwError } from 'rxjs';
 import { PageData } from '@shared/models/page/page-data';
-import { DeviceProfile, DeviceProfileInfo, DeviceTransportType, Property } from '@shared/models/device.models';
+import { DeviceProfile, DeviceProfileInfo,DeviceProfileDto, DeviceTransportType, Property } from '@shared/models/device.models';
 import { deepClone, isDefinedAndNotNull, isEmptyStr } from '@core/utils';
 import {
   ObjectLwM2M,
@@ -124,8 +124,13 @@ export class DeviceProfileService {
     return this.http.post<DeviceProfile>('/api/deviceProfile', deviceProfile, defaultHttpOptionsFromConfig(config));
   }
 
-  public getPropertiesByDeviceProfileId(deviceProfileId: string, config?: RequestConfig): Observable<Array<Property>>{
-    return this.http.get<Array<Property>>(`/api/properties/${deviceProfileId}`,defaultHttpOptionsFromConfig(config));
+  public getPropertiesByDeviceProfileId(deviceProfileId: string, config?: RequestConfig): Observable<Array<Property>> {
+    return this.http.get<Array<Property>>(`/api/properties/${deviceProfileId}`, defaultHttpOptionsFromConfig(config));
+  }
+  //用于物模型创建的请求函数
+  public saveDeviceProfileDto(deviceProfileDto: DeviceProfileDto, config?: RequestConfig): Observable<DeviceProfileDto> {
+    console.log("带物模型发送到后台的数据",deviceProfileDto)
+    return this.http.post<DeviceProfileDto>('/api/deviceProfile', deviceProfileDto, defaultHttpOptionsFromConfig(config));
   }
 
   public deleteDeviceProfile(deviceProfileId: string, config?: RequestConfig) {
