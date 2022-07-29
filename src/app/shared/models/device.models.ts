@@ -557,8 +557,6 @@ export interface DeviceProfileData {
   provisionConfiguration?: DeviceProvisionConfiguration;
 }
 
-
-//增加物模型的配置
 export interface DeviceProfile extends BaseData<DeviceProfileId> {
   tenantId?: TenantId;
   name: string;
@@ -568,7 +566,6 @@ export interface DeviceProfile extends BaseData<DeviceProfileId> {
   image?: string;
   transportType: DeviceTransportType;
   provisionType: DeviceProvisionType;
-   //疑问号表示这个属性有可能不存在
   provisionDeviceKey?: string;
   defaultRuleChainId?: RuleChainId;
   defaultDashboardId?: DashboardId;
@@ -578,18 +575,12 @@ export interface DeviceProfile extends BaseData<DeviceProfileId> {
   profileData: DeviceProfileData;
 }
 
-
-//为了满足能够创建新的物模型而新建的DTO
-export interface DeviceProfileDto{
-  deviceProfile: DeviceProfile;
-  properties: Array<ObjectModelProperty>;
-}
-
 //定义一个物模型的属性,有名字和类型
-export interface ObjectModelProperty{
+export interface Property{
   name: string;
-  tyep: string;
-  isTag: boolean;
+  type: string;
+  tag: boolean;
+  deviceProfile: DeviceProfileId;
 }
 
 export interface DeviceProfileInfo extends EntityInfoData {

@@ -63,6 +63,8 @@ import { OtaUpdateModule } from '@home/pages/ota-update/ota-update.module';
       provide: MODULES_MAP,
       useValue: modulesMap
     }
+  ],
+  declarations: [
   ]
 })
 export class HomePagesModule { }

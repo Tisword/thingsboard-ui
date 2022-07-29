@@ -1,0 +1,21 @@
+<!-- <p>
+    <li *ngFor="let property of properties">
+        <div>属性名称：{{ property.name }}</div>
+        <div>属性类型：{{ property.type }}</div>
+        <div>是否静态？：{{ property.tag }}</div>
+    </li>
+
+</p> -->
+
+<table [border]="0" cellspacing="30" borderspacing="30">
+    <tr>
+        <th>名称</th>
+        <th>类型</th>
+        <th>静态？</th>
+    </tr>
+    <tr *ngFor="let item of properties;let i =index;" >
+            <td>{{item.name}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.tag}}</td>
+    </tr>
+</table>

@@ -46,7 +46,7 @@ import { DashboardId } from '@shared/models/id/dashboard-id';
 @Component({
   selector: 'tb-device-profile',
   templateUrl: './device-profile.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class DeviceProfileComponent extends EntityComponent<DeviceProfile> {
 

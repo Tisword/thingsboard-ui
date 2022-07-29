@@ -2680,5 +2680,8 @@
       "update-timeseries": "更新 Timeseries",
       "value": "价值"
     }
+  },
+  "object-model":{
+    "model": "物模型"
   }
 }

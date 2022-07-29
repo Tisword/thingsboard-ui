@@ -24,7 +24,6 @@ import {
   deviceTransportTypeHintMap,
   deviceTransportTypeTranslationMap
 } from '@shared/models/device.models';
-
 @Component({
   selector: 'tb-device-profile-tabs',
   templateUrl: './device-profile-tabs.component.html',
@@ -40,6 +39,7 @@ export class DeviceProfileTabsComponent extends EntityTabsComponent<DeviceProfil
 
   isTransportTypeChanged = false;
 
+
   constructor(protected store: Store<AppState>) {
     super(store);
   }
@@ -49,6 +49,7 @@ export class DeviceProfileTabsComponent extends EntityTabsComponent<DeviceProfil
     this.detailsForm.get('transportType').valueChanges.subscribe(() => {
       this.isTransportTypeChanged = true;
     });
+
   }
 
 }

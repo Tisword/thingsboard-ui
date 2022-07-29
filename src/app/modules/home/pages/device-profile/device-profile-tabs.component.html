@@ -75,3 +75,30 @@
          label="{{ 'audit-log.audit-logs' | translate }}">
   <tb-audit-log-table detailsMode="true" [active]="auditLogsTab.isActive" [auditLogMode]="auditLogModes.ENTITY" [entityId]="entity.id"></tb-audit-log-table>
 </mat-tab>
+<mat-tab *ngIf="entity" #transportType="matTab"
+         label="{{ 'object-model.model' | translate }}">
+  <div class="mat-padding" [formGroup]="detailsForm" *ngIf="transportType.isActive">
+    <!-- <mat-form-field class="mat-block">
+      <mat-label translate>device-profile.transport-type</mat-label>
+      <mat-select formControlName="transportType" required>
+        <mat-option *ngFor="let type of deviceTransportTypes" [value]="type">
+          {{deviceTransportTypeTranslations.get(type) | translate}}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="detailsForm.get('transportType').value">
+        {{deviceTransportTypeHints.get(detailsForm.get('transportType').value) | translate}}
+      </mat-hint>
+      <mat-error *ngIf="detailsForm.get('transportType').hasError('required')">
+        {{ 'device-profile.transport-type-required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div formGroupName="profileData">
+      <tb-device-profile-transport-configuration
+        formControlName="transportConfiguration"
+        [isAdd] = "isTransportTypeChanged"
+        required>
+      </tb-device-profile-transport-configuration>
+    </div> -->
+    <tb-object-model [deviceProfileId]="this.entityValue.id"></tb-object-model>
+  </div>
+</mat-tab>

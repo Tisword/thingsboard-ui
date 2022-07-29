@@ -29,13 +29,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@core/core.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from '@shared/components/dialog.component';
-import {DeviceProfileObjectmodelComponent} from'./device-profile-objectmodel/device-profile-objectmodel.component'
 import { Router } from '@angular/router';
 import {
   createDeviceProfileConfiguration,
   createDeviceProfileTransportConfiguration,
   DeviceProfile,
-  DeviceProfileDto,
   DeviceProfileType,
   deviceProfileTypeTranslationMap,
   DeviceProvisionConfiguration,
@@ -68,9 +66,6 @@ export class AddDeviceProfileDialogComponent extends
   DialogComponent<AddDeviceProfileDialogComponent, DeviceProfile> implements AfterViewInit {
 
   @ViewChild('addDeviceProfileStepper', {static: true}) addDeviceProfileStepper: MatHorizontalStepper;
-  
-  //添加子组件以调用子组件的方法
-  @ViewChild('addobjectModel')  addobjectModel:DeviceProfileObjectmodelComponent;
 
   selectedIndex = 0;
 
@@ -95,9 +90,6 @@ export class AddDeviceProfileDialogComponent extends
   alarmRulesFormGroup: FormGroup;
 
   provisionConfigFormGroup: FormGroup;
-
-  // 添加一个物模型的表格
-  objectModelConfigFormGroup: FormGroup;
 
   serviceType = ServiceType.TB_RULE_ENGINE;
 
@@ -146,12 +138,6 @@ export class AddDeviceProfileDialogComponent extends
         } as DeviceProvisionConfiguration, [Validators.required]]
       }
     );
-
-    this.objectModelConfigFormGroup = this.fb.group(
-      {
-        properties:[null]
-      }
-  );
   }
 
   private deviceProfileTransportTypeChanged() {
@@ -189,15 +175,10 @@ export class AddDeviceProfileDialogComponent extends
         return this.alarmRulesFormGroup;
       case 3:
         return this.provisionConfigFormGroup;
-      case 4:
-        return this.objectModelConfigFormGroup;//添加一个用于填写物模型属性的表格
     }
   }
 
   add(): void {
-    //调用子组件的方法保存之前的物模型数据
-    this.addobjectModel.onSubmit();
-    //开始传数据
     if (this.allValid()) {
       const deviceProvisionConfiguration: DeviceProvisionConfiguration = this.provisionConfigFormGroup.get('provisionConfiguration').value;
       const provisionDeviceKey = deviceProvisionConfiguration.provisionDeviceKey;
@@ -216,7 +197,7 @@ export class AddDeviceProfileDialogComponent extends
           transportConfiguration: this.transportConfigFormGroup.get('transportConfiguration').value,
           alarms: this.alarmRulesFormGroup.get('alarms').value,
           provisionConfiguration: deviceProvisionConfiguration
-        },
+        }
       };
       if (this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value) {
         deviceProfile.defaultRuleChainId = new RuleChainId(this.deviceProfileDetailsFormGroup.get('defaultRuleChainId').value);
@@ -224,14 +205,9 @@ export class AddDeviceProfileDialogComponent extends
       if (this.deviceProfileDetailsFormGroup.get('defaultDashboardId').value) {
         deviceProfile.defaultDashboardId = new DashboardId(this.deviceProfileDetailsFormGroup.get('defaultDashboardId').value);
       }
-      const deviceProfileDto:DeviceProfileDto={
-        deviceProfile:deviceProfile,
-        properties:this.objectModelConfigFormGroup.value.properties
-
-      }
-      this.deviceProfileService.saveDeviceProfileDto(deepTrim(deviceProfileDto)).subscribe(
+      this.deviceProfileService.saveDeviceProfile(deepTrim(deviceProfile)).subscribe(
         (savedDeviceProfile) => {
-          this.dialogRef.close(savedDeviceProfile.deviceProfile);
+          this.dialogRef.close(savedDeviceProfile);
         }
       );
     }
@@ -247,8 +223,6 @@ export class AddDeviceProfileDialogComponent extends
         return 'device-profile.alarm-rules';
       case 3:
         return 'device-profile.device-provisioning';
-      case 4:
-        return '添加物模型'; //用于添加物模型
     }
   }
 
@@ -275,10 +249,5 @@ export class AddDeviceProfileDialogComponent extends
         return false;
       }
     });
-  }
-  //添加处理接收物模型的函数
-  ObjectModeChange(event: FormGroup){
-      this.objectModelConfigFormGroup=event;
-      console.log("父组件获取值",this.objectModelConfigFormGroup.value.properties)
   }
 }

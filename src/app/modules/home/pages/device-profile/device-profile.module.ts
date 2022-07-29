@@ -20,10 +20,12 @@ import { SharedModule } from '@shared/shared.module';
 import { HomeComponentsModule } from '@modules/home/components/home-components.module';
 import { DeviceProfileTabsComponent } from './device-profile-tabs.component';
 import { DeviceProfileRoutingModule } from './device-profile-routing.module';
+import { ObjectModelComponent } from './object-model/object-model.component';
 
 @NgModule({
   declarations: [
-    DeviceProfileTabsComponent
+    DeviceProfileTabsComponent,
+    ObjectModelComponent
   ],
   imports: [
     CommonModule,
