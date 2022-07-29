@@ -326,7 +326,9 @@ export class DeviceWizardDialogComponent extends
     }
   }
 
+  //这里添加新设备
   private createDevice(profileId): Observable<BaseData<HasId>> {
+    console.log("得到的profileId为",profileId);
     const device = {
       name: this.deviceWizardFormGroup.get('name').value,
       label: this.deviceWizardFormGroup.get('label').value,
@@ -392,6 +394,7 @@ export class DeviceWizardDialogComponent extends
   }
 
   changeStep($event: StepperSelectionEvent): void {
+    console.log("选择的设备配置名称",this.deviceWizardFormGroup.value.deviceProfileId);
     this.selectedIndex = $event.selectedIndex;
     if (this.selectedIndex === this.maxStepperIndex) {
       this.showNext = false;

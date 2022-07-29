@@ -40,6 +40,7 @@
           <fieldset [disabled]="isLoading$ | async">
             <mat-form-field class="mat-block">
               <mat-label translate>device.name</mat-label>
+              <!-- 这里填写设备的名字 -->
               <input matInput formControlName="name" required>
               <mat-error *ngIf="deviceWizardFormGroup.get('name').hasError('required')">
                 {{ 'device.name-required' | translate }}
@@ -50,21 +51,25 @@
             </mat-form-field>
             <mat-form-field class="mat-block">
               <mat-label translate>device.label</mat-label>
+              <!-- 这里填写设备的标签 -->
               <input matInput formControlName="label">
               <mat-error *ngIf="deviceWizardFormGroup.get('label').hasError('maxlength')">
                 {{ 'device.label-max-length' | translate }}
               </mat-error>
             </mat-form-field>
+            <!--这里选择是否使用已有的配置 -->
             <div fxLayout="row" fxLayoutGap="16px">
               <mat-radio-group fxLayout="column" formControlName="addProfileType" fxLayoutAlign="space-around">
                 <mat-radio-button [value]="0" color="primary">
                   <span translate>device.wizard.existing-device-profile</span>
                 </mat-radio-button>
-                <mat-radio-button [value]="1" color="primary">
+                <!--不需要从这里新建配置，直接选择已有的 -->
+                <!-- <mat-radio-button [value]="1" color="primary">
                   <span translate>device.wizard.new-device-profile</span>
-                </mat-radio-button>
+                </mat-radio-button> -->
               </mat-radio-group>
               <div fxLayout="column">
+                <!-- 这里选择已经有的配置 -->
                 <tb-device-profile-autocomplete
                   [required]="!createProfile"
                   formControlName="deviceProfileId"
@@ -74,7 +79,8 @@
                   [editProfileEnabled]="false"
                   (deviceProfileChanged)="deviceProfileChanged($event)">
                 </tb-device-profile-autocomplete>
-                <mat-form-field fxFlex class="mat-block"
+                <!-- 这里是使用已有设备配置的逻辑 -->
+                <!-- <mat-form-field fxFlex class="mat-block"
                                 [ngClass]="{invisible: deviceWizardFormGroup.get('addProfileType').value !== 1}">
                   <mat-label translate>device-profile.new-device-profile-name</mat-label>
                   <input matInput formControlName="newDeviceProfileTitle"
@@ -82,9 +88,9 @@
                   <mat-error *ngIf="deviceWizardFormGroup.get('newDeviceProfileTitle').hasError('required')">
                     {{ 'device-profile.new-device-profile-name-required' | translate }}
                   </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
               </div>
-              <div fxLayout="column" fxLayoutAlign="flex-end start">
+              <!-- <div fxLayout="column" fxLayoutAlign="flex-end start">
                 <tb-rule-chain-autocomplete
                   [ngClass]="{invisible: deviceWizardFormGroup.get('addProfileType').value !== 1}"
                   labelText="device-profile.default-rule-chain"
@@ -97,8 +103,9 @@
                   [queueType]="serviceType"
                   formControlName="defaultQueueName">
                 </tb-queue-type-list>
-              </div>
+              </div> -->
             </div>
+            <!-- 这里选择是否是网关 -->
             <div fxLayout="row" fxLayoutGap="16px" style="padding-bottom: 16px;">
               <mat-checkbox formControlName="gateway">
                 {{ 'device.is-gateway' | translate }}
@@ -108,6 +115,7 @@
                 {{ 'device.overwrite-activity-time' | translate }}
               </mat-checkbox>
             </div>
+            <!--这里是设备描述 -->
             <mat-form-field class="mat-block">
               <mat-label translate>device.description</mat-label>
               <textarea matInput formControlName="description" rows="2"></textarea>
@@ -115,6 +123,7 @@
           </fieldset>
         </form>
       </mat-step>
+      <!-- 第二步选择传输配置 -->
       <mat-step [stepControl]="transportConfigFormGroup" [optional]="true" *ngIf="createProfile">
         <form [formGroup]="transportConfigFormGroup" style="padding-bottom: 16px;">
           <ng-template matStepLabel>{{ 'device-profile.transport-configuration' | translate }}</ng-template><mat-form-field class="mat-block" style="padding-bottom: 14px;">
@@ -157,6 +166,7 @@
           </tb-device-profile-provision-configuration>
         </form>
       </mat-step>
+      <!-- 添加凭据 -->
       <mat-step [stepControl]="credentialsFormGroup" [optional]="true">
         <ng-template matStepLabel>{{ 'device.credentials' | translate }}</ng-template>
         <form [formGroup]="credentialsFormGroup" style="padding-bottom: 16px;">
@@ -168,6 +178,7 @@
           </tb-device-credentials>
         </form>
       </mat-step>
+      <!-- 添加客户 -->
       <mat-step [stepControl]="customerFormGroup" [optional]="true">
         <ng-template matStepLabel>{{ 'customer.customer' | translate }}</ng-template>
         <form [formGroup]="customerFormGroup" style="padding-bottom: 16px;">
